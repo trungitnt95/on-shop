@@ -1,12 +1,12 @@
 package trungitnt95.springboot001.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+
+import java.math.BigDecimal;
 
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "t_product")
 public class ProductEntity extends AbstractEntity {
@@ -16,6 +16,18 @@ public class ProductEntity extends AbstractEntity {
     private Long id;
 
     private String name;
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "category")
+    private CategoryEnum categoryEnum;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "genre")
+    private GenreEnum genreEnum;
+
+    private String tag;
+    private BigDecimal price;
+    private int total;
+
 
     @Override
     public Long getId() {
