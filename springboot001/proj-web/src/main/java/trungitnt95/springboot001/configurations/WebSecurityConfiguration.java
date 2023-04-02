@@ -18,8 +18,9 @@ public class WebSecurityConfiguration {
         HttpSecurity httpSecurity = http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
         if (!securityDisabled) {
-
+            // TODO: perform security check with JWT
         } else {
+            httpSecurity.headers().frameOptions().disable();
             httpSecurity.authorizeHttpRequests()
                     .requestMatchers("/**").permitAll();
         }

@@ -20,7 +20,7 @@ public class ProductV1RestController extends AbstractProductController<ProductV1
     }
 
     @Override
-    protected WebMapper<ProductV1Dto, ProductEntity> getMapper() {
+    public WebMapper<ProductV1Dto, ProductEntity> getMapper() {
         return productV1Mapper;
     }
 }

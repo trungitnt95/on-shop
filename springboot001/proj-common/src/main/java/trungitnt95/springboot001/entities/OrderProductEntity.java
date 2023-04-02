@@ -1,27 +1,26 @@
 package trungitnt95.springboot001.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-
-@Table(name = "t_cart_product")
 @Entity
-@Data
-public class CartEntity {
-
+@Table(name = "t_order_product")
+@Setter
+@Getter
+public class OrderProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private OrderEntity orderEntity;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private ProductEntity productEntity;
 
-    @NotNull
     private int quantity;
+
 }

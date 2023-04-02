@@ -1,8 +1,8 @@
 package trungitnt95.springboot001.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -10,7 +10,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "t_order")
-@Data
+@Setter
+@Getter
 public class OrderEntity extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,17 +21,13 @@ public class OrderEntity extends AbstractEntity {
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    @OneToOne
-    @JoinColumn(name = "product_id")
-    private ProductEntity productEntity;
+    @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.ALL)
+    private Set<OrderProductEntity> orderProductEntities = new HashSet<>();
 
-    @NotNull
-    private BigDecimal price;
-    @NotNull
     private BigDecimal totalPrice;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method")
     private PaymentMethodEnum paymentMethodEnum;
 
     @Override
@@ -43,6 +40,6 @@ public class OrderEntity extends AbstractEntity {
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "orderEntity")
+    @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.ALL)
     private Set<OrderStatusEntity> orderStatuses = new HashSet<>();
 }

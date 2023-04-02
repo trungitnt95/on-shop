@@ -4,16 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import trungitnt95.springboot001.controllers.AbstractController;
 import trungitnt95.springboot001.services.ProductService;
-import trungitnt95.springboot001.mappers.WebMapper;
 import trungitnt95.springboot001.entities.ProductEntity;
 
 import java.util.List;
 
-public abstract class AbstractProductController<T> {
+public abstract class AbstractProductController<T> extends AbstractController<T, ProductEntity> {
     protected ProductService productService;
-
-    protected abstract WebMapper<T, ProductEntity> getMapper();
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -21,11 +19,11 @@ public abstract class AbstractProductController<T> {
     }
 
     @GetMapping()
-    public List<T> getProducts(@RequestParam(name = "nam", required = false) String name,
+    public List<T> getProducts(@RequestParam(name = "name", required = false) String name,
                                @RequestParam(name = "tag", required = false) String tag,
-                               @RequestParam(name = "s_f", required = false) String sortOnField,
-                               @RequestParam(name = "s_i", required = false) String sortManner,
-                               @RequestParam(name = "p_i", required = false) String pageIndex) {
+                               @RequestParam(name = "sortOnField", required = false) String sortOnField,
+                               @RequestParam(name = "sortManner", required = false) String sortManner,
+                               @RequestParam(name = "pageIndex", required = false) String pageIndex) {
         return getMapper().toDtos(productService.getProducts());
     }
 
